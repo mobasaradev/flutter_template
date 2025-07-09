@@ -8,7 +8,7 @@ enum SplashStatus { loading, authenticated, unauthenticated }
 class SplashController extends _$SplashController {
   @override
   FutureOr<SplashStatus> build() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
 
     final isLoggedIn = await checkUserLoggedInStatus();
 

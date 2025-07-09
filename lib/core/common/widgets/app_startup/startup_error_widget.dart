@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+part of 'startup_widget.dart';
 
-class AppStartupErrorWidget extends StatelessWidget {
-  const AppStartupErrorWidget({
-    super.key,
+class _AppStartupErrorWidget extends StatelessWidget {
+  const _AppStartupErrorWidget({
     required this.errorMessage,
     required this.onRetry,
   });

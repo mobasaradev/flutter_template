@@ -6,7 +6,7 @@ part of 'splash_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$splashControllerHash() => r'18634b778292964b5d236843f8bc519a24ae84aa';
+String _$splashControllerHash() => r'96f5fb7e31685cd7a22c1d48fbdcb0c077360388';
 
 /// See also [SplashController].
 @ProviderFor(SplashController)

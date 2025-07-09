@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class NavigationShell extends StatefulWidget {
-  const NavigationShell({
-    super.key,
-    required this.statefulNavigationShell,
-  });
+  const NavigationShell({super.key, required this.statefulNavigationShell});
 
   final StatefulNavigationShell statefulNavigationShell;
 
@@ -17,9 +14,6 @@ class _NavigationShellState extends State<NavigationShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Flutter Template"),
-      ),
       body: widget.statefulNavigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: widget.statefulNavigationShell.currentIndex,

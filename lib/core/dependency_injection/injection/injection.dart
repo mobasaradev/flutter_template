@@ -10,11 +10,13 @@ final getIt = GetIt.instance;
 
 void setupInjection() {
   // DataSource
-  getIt.registerLazySingleton<LoginDataSource>(() => LoginDataSourceImpl());
+  getIt.registerLazySingleton<LoginDataSource>(
+    () => LoginDataSourceImpl(networkHandler: getIt()),
+  );
 
   // Repository
   getIt.registerLazySingleton<LoginRepository>(
-    () => LoginRepositoryImpl(getIt()),
+    () => LoginRepositoryImpl(loginDataSource: getIt()),
   );
 
   // UseCase

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/core/extension/extension.dart';
+import 'package:flutter_template/core/extension/go_router_extension.dart';
 
+import '../../../../../core/router/routes.dart';
 import '../riverpod/login_provider.dart';
 
 part '../widgets/login_form.dart';
@@ -22,18 +24,35 @@ class LoginPage extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: loginState.when(
-          data: (user) => user != null
-              ? Center(child: Text('Welcome ${user.email}'))
-              : _LoginForm(
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  onSubmit: () {
-                    loginNotifier.login(
-                      emailController.text.trim(),
-                      passwordController.text.trim(),
-                    );
-                  },
-                ),
+          data: (user) {
+            if (user != null) {
+              Future.microtask(() {
+                context.pushNamedAndRemoveUntil(Routes.home);
+              });
+              return const SizedBox.shrink();
+            }
+
+            return _LoginForm(
+              emailController: emailController,
+              passwordController: passwordController,
+              onSubmit: () {
+                final email = emailController.text.trim();
+                final password = passwordController.text.trim();
+
+                if (email.isEmpty || password.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Email and password required'),
+                    ),
+                  );
+                  return;
+                }
+
+                loginNotifier.login(email, password);
+              },
+            );
+          },
+
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +60,7 @@ class LoginPage extends ConsumerWidget {
               Text(
                 "Error: $e",
                 style: context.textStyle.bodyMedium.copyWith(
-                  color: context.color.warning,
+                  color: context.color.error,
                 ),
               ),
               const SizedBox(height: 16),
@@ -49,10 +68,19 @@ class LoginPage extends ConsumerWidget {
                 emailController: emailController,
                 passwordController: passwordController,
                 onSubmit: () {
-                  loginNotifier.login(
-                    emailController.text.trim(),
-                    passwordController.text.trim(),
-                  );
+                  final email = emailController.text.trim();
+                  final password = passwordController.text.trim();
+
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Email and password required'),
+                      ),
+                    );
+                    return;
+                  }
+
+                  loginNotifier.login(email, password);
                 },
               ),
             ],

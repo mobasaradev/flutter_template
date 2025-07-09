@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/dependency_injection/injection/injection.dart';
+import 'core/router/router.dart';
 import 'core/theme/theme_data/theme_data.dart';
 import 'core/theme/theme_notifier.dart';
-import 'feature/home/presentation/view/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +18,14 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    final router = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: AppThemeData.light,
       darkTheme: AppThemeData.dark,
       themeMode: ref.watch(themeNotifierProvider),
-      home: HomePage(),
+      routerConfig: router,
     );
   }
 }

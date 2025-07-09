@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../feature/authentication/login/view/login_page.dart';
+import '../../feature/auth/login/presentation/view/login_page.dart';
 import '../../feature/home/presentation/view/home_page.dart';
 import '../../feature/splash/presentation/view/splash_page.dart';
 import '../common/provider/app_state_provider/app_state_provider.dart';
@@ -32,8 +32,8 @@ GoRouter goRouter(Ref ref) {
 
       final loggedIn = loggedInAsync.value ?? false;
 
-      if ([Routes.initial, Routes.splash].contains(path)) {
-        return null;
+      if (path == Routes.initial) {
+        return loggedIn ? Routes.home : Routes.login;
       }
 
       if (!loggedIn && path != Routes.login) {
