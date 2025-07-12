@@ -11,7 +11,7 @@ final getIt = GetIt.instance;
 void setupInjection() {
   // DataSource
   getIt.registerLazySingleton<LoginDataSource>(
-    () => LoginDataSourceImpl(networkHandler: getIt()),
+    () => LoginDataSourceImpl(getIt()),
   );
 
   // Repository

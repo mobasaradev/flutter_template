@@ -11,9 +11,7 @@ part 'login_provider.g.dart';
 @riverpod
 class LoginController extends _$LoginController {
   @override
-  FutureOr<LoginEntity?> build() {
-    return null;
-  }
+  FutureOr<LoginEntity?> build() => null;
 
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
@@ -22,17 +20,11 @@ class LoginController extends _$LoginController {
     try {
       final result = await useCase.execute(email, password);
 
-      result.fold(
-        (error) {
-          state = AsyncError(error, StackTrace.current);
-        },
-        (loginEntity) async {
-          final sp = await ref.read(sharedPreferencesProvider.future);
-          await sp.setBool('is_logged_in', true);
-          state = AsyncData(loginEntity);
-          ref.invalidate(isLoggedInProvider);
-        },
-      );
+      final sp = await ref.read(sharedPreferencesProvider.future);
+      await sp.setBool('is_logged_in', true);
+
+      state = AsyncData(result);
+      ref.invalidate(isLoggedInProvider);
     } catch (e, st) {
       state = AsyncError(e, st);
     }
